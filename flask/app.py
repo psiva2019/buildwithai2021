@@ -24,18 +24,10 @@ def predict():
     code_presentation = {'2013B':0,'2013J':1,'2014B':2,'2014J':3}
     gender = {'F':0,'M':1}
     disability = {'N':0,'Y':1}
-    #final_result = {'Withdrawn':3,'Pass':2,'Fail':1,'Distinction':0}
     highest_education = {'A Level or Equivalent':0,'HE Qualification':1,'Lower Than A Level':2,'No Formal quals':3,'Post Graduate Qualification':4}
     imd_band = {'0-10%':0,'10-20%':1,'20-30%':2,'30-40%':3,'40-50%':4,'50-60%':5,'60-70%':6,'70-80%':7,'80-90%':8,'90-100%':9}
     region = {'East Anglian Region':0,'East Midlands Region':1,'Ireland':2,'London Region':3,'North Region':4,'North Western Region':5,'Scotland':6,'South East Region':7,'South Region':8,'South West Region':9,'Wales':10,'West Midlands Region':11,'Yorkshire Region':12}
     
-    
-    #['AAA', '2013J', '5', '25', 'Forum', 'TMA', '10', '352', '6', '0', '52', 'M', 'Scotland', 'A-level', '10-30%', '0-35', '2', '12', 'N', '-3']
-    
-    
-
-    #s_code_mod,s_activity_type, s_age_band, s_assess_type,s_code_presentation,s_edu, s_imd_band,s_region,s_gender,s_disability = code_module[input_features[0]],activity_type[input_features[4]],age_band[input_features[-5]],assessment_type[input_features[5]],code_presentation[input_features[1]],highest_education[input_features[-7]],imd_band[input_features[-6]],region[input_features[-8]],gender[input_features[9]],disability[input_features[-2]]
-    #s_code_mod,s_activity_type, s_age_band, s_assess_type,s_code_presentation,s_edu, s_imd_band,s_region,s_gender,s_disability = ,,,,,,,,,
     s_code_mod = code_module[input_features[0]]
     s_activity_type = activity_type[input_features[4]]
     s_age_band = age_band[input_features[-5]]
@@ -47,6 +39,7 @@ def predict():
     s_gender = gender[input_features[11]]
     s_disability = disability[input_features[-2]]
     
+    disp_activity = [k for k,v in activity_type.items() if v == s_activity_type]
     print(input_features)
     non_mapped = [input_features[2], input_features[3], input_features[6],input_features[7],input_features[8],input_features[9],input_features[10],input_features[-4],input_features[-3],input_features[-1]]    
     print(non_mapped)                           
@@ -60,10 +53,6 @@ def predict():
     print('output={0}'.format(prediction))
 
     if prediction==1:
-        return render_template('stu_form.html',pred='Your student is likely to pass in his/her upcoming exams !!',bhai="The strategies followed to access your course or the times followed to start/submit assignments seems fine.")
+        return render_template('stu_form.html',pred="Your student is likely to pass in his/her upcoming exams !! \n The strategies followed to access your course or the times followed to start/submit assignments seems fine.")
     else:
-        return render_template('stu_form.html',pred='Your student is likely to fail in his/her upcoming exams !!',bhai="May need improvements/changes in way of preparation, or resources other than {} can be tried!".format(s_activity_type))
-
-
-#if __name__ == '__main__':
-#    app.run(debug=True)
+        return render_template('stu_form.html',pred="Your student is likely to fail in his/her upcoming exams !! \n May need improvements/changes in way of preparation, or resources other than {0} can be tried!".format(disp_activity[0]))
